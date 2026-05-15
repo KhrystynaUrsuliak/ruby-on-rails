@@ -1,6 +1,5 @@
 require_relative 'task_manager'
 
-# Клас App реалізує консольний додаток з меню
 class App
   YAML_FILE = 'tasks.yaml'
   JSON_FILE = 'tasks.json'
@@ -9,7 +8,6 @@ class App
     @manager = TaskManager.new
   end
 
-  # Запуск програми
   def run
     load_data_on_start
 
@@ -49,7 +47,6 @@ class App
         end
       end
     ensure
-      # Автозбереження у YAML при завершенні програми
       @manager.save_to_yaml(YAML_FILE)
       puts "Автозбереження виконано."
     end
@@ -57,7 +54,6 @@ class App
 
   private
 
-  # Автозавантаження при старті: yaml → json → порожній стан
   def load_data_on_start
     if File.exist?(YAML_FILE)
       @manager.load_from_yaml(YAML_FILE)
@@ -68,7 +64,6 @@ class App
     end
   end
 
-  # Виведення меню
   def show_menu
     puts
     puts "========== Менеджер завдань =========="
@@ -87,7 +82,6 @@ class App
     print "Оберіть пункт меню: "
   end
 
-  # Меню додавання завдання
   def add_task_menu
     print "Введіть назву завдання: "
     title = gets.chomp
@@ -151,7 +145,6 @@ class App
     @manager.edit_task(id, new_data)
   end
 
-  # Меню видалення завдання
   def delete_task_menu
     print "Введіть id завдання для видалення: "
     id = gets.chomp.to_i
@@ -159,7 +152,6 @@ class App
     @manager.delete_task(id)
   end
 
-  # Меню пошуку за назвою
   def find_by_title_menu
     print "Введіть частину назви для пошуку: "
     query = gets.chomp
@@ -167,7 +159,6 @@ class App
     @manager.find_by_title(query)
   end
 
-  # Меню фільтрації за категорією
   def filter_by_category_menu
     print "Введіть категорію: "
     category = gets.chomp
@@ -175,7 +166,6 @@ class App
     @manager.filter_by_category(category)
   end
 
-  # Меню фільтрації за пріоритетом
   def filter_by_priority_menu
     print "Введіть пріоритет Високий/Середній/Низький: "
     priority = gets.chomp
@@ -183,27 +173,22 @@ class App
     @manager.filter_by_priority(priority)
   end
 
-  # Збереження у JSON
   def save_json_menu
     @manager.save_to_json(JSON_FILE)
   end
 
-  # Завантаження з JSON
   def load_json_menu
     @manager.load_from_json(JSON_FILE)
   end
 
-  # Збереження у YAML
   def save_yaml_menu
     @manager.save_to_yaml(YAML_FILE)
   end
 
-  # Завантаження з YAML
   def load_yaml_menu
     @manager.load_from_yaml(YAML_FILE)
   end
 end
 
-# Створення та запуск додатку
 app = App.new
 app.run
