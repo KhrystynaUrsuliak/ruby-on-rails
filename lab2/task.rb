@@ -1,4 +1,3 @@
-# Клас Task представляє одне завдання
 class Task
   attr_accessor :title, :categories, :priority, :due_date, :estimated_hours, :completed
 
